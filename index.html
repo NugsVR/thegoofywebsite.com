@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hey...</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #0f0;
+      font-family: monospace;
+      font-size: 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    input, button {
+      margin-top: 20px;
+      padding: 10px;
+      font-size: 24px;
+      background-color: #111;
+      color: #0f0;
+      border: 2px solid #0f0;
+      font-family: monospace;
+    }
+    .hidden {
+      display: none;
+    }
+    .chip {
+      margin-top: 20px;
+      width: 100px;
+      height: 100px;
+      background: yellow url('https://upload.wikimedia.org/wikipedia/commons/8/88/Casino_chip_icon.png') no-repeat center center;
+      background-size: contain;
+      animation: spin 2s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div id="message">hey...</div>
+  <input type="text" id="nameInput" placeholder="what's your name?" class="hidden">
+  <div id="buttons" class="hidden">
+    <button id="yesBtn">Yes</button>
+    <button id="noBtn">No</button>
+  </div>
+  <div id="subButtons" class="hidden">
+    <button id="subYes">Yes</button>
+    <button id="subNo">No</button>
+  </div>
+  <div id="chip" class="chip hidden"></div>
+  <audio id="partyMusic" loop>
+    <source src="1 HOUR of ohio ahh sound effect-yt.savetube.me.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const isAllowedBrowser = () => {
+      const ua = navigator.userAgent.toLowerCase();
+      return ua.includes("chrome") || ua.includes("opera") || ua.includes("opr");
+    };
+
+    function showMessage(message, delay = 2000, next) {
+      setTimeout(() => {
+        document.getElementById("message").textContent = message;
+        if (typeof next === 'function') next();
+      }, delay);
+    }
+
+    showMessage("i have not seen you here...", 2000, () => {
+      const input = document.getElementById("nameInput");
+      input.classList.remove("hidden");
+      input.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+          const name = input.value.trim();
+          if (name) {
+            document.getElementById("message").textContent = `that’s a cool name, ${name}.`;
+            input.classList.add("hidden");
+            showMessage("do you watch YouTube?", 2000, () => {
+              document.getElementById("buttons").classList.remove("hidden");
+            });
+          }
+        }
+      });
+    });
+
+    document.getElementById("yesBtn").onclick = function() {
+      document.getElementById("message").textContent = "then go subscribe to NugsVR1!";
+      document.getElementById("buttons").classList.add("hidden");
+      showMessage("already subscribed?", 2000, () => {
+        document.getElementById("subButtons").classList.remove("hidden");
+      });
+    };
+
+    document.getElementById("noBtn").onclick = function() {
+      document.getElementById("message").textContent = "oh well... try it out.";
+      document.getElementById("buttons").classList.add("hidden");
+    };
+
+    document.getElementById("subYes").onclick = function() {
+      document.getElementById("message").textContent = "thx for supporting me!";
+      document.getElementById("subButtons").classList.add("hidden");
+      showMessage("get ready for super skibidi toilet rizz party", 2000, () => {
+        document.getElementById("chip").classList.remove("hidden");
+
+        // Play music only for allowed browsers
+        if (isAllowedBrowser()) {
+          const music = document.getElementById("partyMusic");
+          music.play().catch(e => console.log("Audio play prevented: ", e));
+        }
+      });
+    };
+
+    document.getElementById("subNo").onclick = function() {
+      document.getElementById("message").textContent = "then go subscribe to me!!!";
+      document.getElementById("subButtons").classList.add("hidden");
+    };
+  </script>
+</body>
+</html>
+
